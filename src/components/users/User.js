@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Spinner from '../layout/Spinner'
-import PropTypes from 'prop-types'
 import Repos from '../repos/Repos'
+import GithubContext from '../../context/github/githubContext'
 
-const User = ({ user, loading, repos, getUser, getUserRepos, match }) => {
+const User = ({ match }) => {
+  const githubContext = useContext(GithubContext)
+  const { loading, user, getUser, getUserRepos } = githubContext
   const {
     name,
     company,
@@ -37,41 +39,41 @@ const User = ({ user, loading, repos, getUser, getUserRepos, match }) => {
         Back To Search
       </Link>
       Hireable: {''}
-      {hireable ? <i className="fas fa-check-circle text-success" /> :  <i className="fas fa-check-circle text-danger" />}
+      {hireable ? <i className="fas fa-check-circle text-success" /> : <i className="fas fa-check-circle text-danger" />}
       <div className="card grid-2">
         <div className="all-center">
           <img
             src={avatar_url}
             alt="avatar..."
             className="round-img"
-            style={{width: '150px'}}  
+            style={{ width: '150px' }}
           />
           <h1>{name}</h1>
           <p>Location: {location}</p>
         </div>
         <div>
           {bio && <React.Fragment>
-              <h3>Bio</h3>
-              <p>{bio}</p>
-            </React.Fragment>}
+            <h3>Bio</h3>
+            <p>{bio}</p>
+          </React.Fragment>}
           <a href={html_url} target="blank" className="btn btn-dark my-1">
             Visit GitHub Profile
           </a>
           <ul>
             <li>
               {login && <React.Fragment>
-                  <strong>Username: </strong>{login}
-                </React.Fragment>}
+                <strong>Username: </strong>{login}
+              </React.Fragment>}
             </li>
             <li>
               {company && <React.Fragment>
-                  <strong>Company: </strong>{company}
-                </React.Fragment>}
+                <strong>Company: </strong>{company}
+              </React.Fragment>}
             </li>
             <li>
               {blog && <React.Fragment>
-                  <strong>Website: </strong>{blog}
-                </React.Fragment>}
+                <strong>Website: </strong>{blog}
+              </React.Fragment>}
             </li>
           </ul>
         </div>
@@ -82,17 +84,9 @@ const User = ({ user, loading, repos, getUser, getUserRepos, match }) => {
         <div className="badge badge-light">Public Repos: {public_repos}</div>
         <div className="badge badge-dark">Public Gists: {public_gists}</div>
       </div>
-      <Repos repos={repos} />
+      <Repos />
     </React.Fragment>
   )
-}
-
-User.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
-  repos: PropTypes.array.isRequired,
-  getUser: PropTypes.func.isRequired,
-  getUserRepos: PropTypes.func.isRequired
 }
 
 export default User

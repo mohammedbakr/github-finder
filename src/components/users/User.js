@@ -49,7 +49,9 @@ const User = ({ match }) => {
             style={{ width: '150px' }}
           />
           <h1>{name}</h1>
-          <p>Location: {location}</p>
+          {location && <React.Fragment>
+            <p>Location: {location}</p>
+          </React.Fragment>}
         </div>
         <div>
           {bio && <React.Fragment>
